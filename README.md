@@ -1,1 +1,2 @@
-# sgu2526k1_csttnt
+# CƠ SỞ TRÍ TUỆ NHÂN TẠO - 2025/12
+
