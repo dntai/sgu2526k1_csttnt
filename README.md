@@ -1,2 +1,8 @@
-# CƠ SỞ TRÍ TUỆ NHÂN TẠO - 2025/12
+# CƠ SỞ TRÍ TUỆ NHÂN TẠO
+
+Môn học Cơ sở trí tuệ nhân tạo
+
+```
+abc
+```
 
