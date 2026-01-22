@@ -28,8 +28,8 @@ class State:
 
     def expand(self):
         d, c = self.pos0
-        for i in range(len(actions)):
-            dn, cn = d + actions[i][0], c + actions[i][1]
+        for i in range(len(State.actions)):
+            dn, cn = d + State.actions[i][0], c + State.actions[i][1]
             if dn>=0 and dn<=2 and cn>=0 and cn<=2:
                 staten = [[v for v in row] for row in self.key]
                 staten[d][c], staten[dn][cn] = staten[dn][cn], staten[d][c]
@@ -39,7 +39,14 @@ class State:
             pass
         pass
     
-    
+    def pprint(self, title = ''):
+        print('-'*10, title, '-'*10)
+        for i in range(3):
+            for j in range(3):
+                print(self.key[i][j], ' ', end="")
+            print()
+        print()
+        pass
     pass
 
 def test1(**kwargs):
@@ -61,6 +68,13 @@ def test1(**kwargs):
 
     print(State(start).tokey())
     print(State(start).__dict__)
+
+    startNode = State(start)
+    startNode.pprint('Start')
+
+    goalNode = State(goal)
+    goalNode.pprint('Goal')
+    
     
     kwargs.get('debug', {}).update(**locals())
     pass # solve
