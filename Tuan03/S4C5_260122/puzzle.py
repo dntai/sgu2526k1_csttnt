@@ -10,6 +10,14 @@ class State:
         self.cost = cost
         pass
 
+    def compare_key(k1, k2):
+        for i in range(3):
+            for j in range(3):
+                if k1[i][j] != k2[i][j]:
+                    return False
+        return True
+        pass
+
     def convert_key(key):
         return tuple([tuple([v for v in row]) for row in key])
         pass
@@ -49,6 +57,40 @@ class State:
         pass
     pass
 
+def bfs(skey, gkey):
+    frontier = [] # queue
+    states = dict({}) # reached states
+
+    sNode = State(skey, parent = None, cost = 0)
+    gNode = State(gkey)
+
+    states[sNode.tokey()] = sNode
+    frontier.append(skey)
+    while len(frontier)>0:
+        curk = frontier[0]
+        curNode = State(curk)
+        frontier.pop(0)
+        
+        if State.compare_key(curk, gkey) is True:
+            break
+            pass
+
+
+        for childk in curNode.expand():
+            childNode = State(childk)
+            if states.get(childNode.tokey()) is None:
+                childNode.parent = curNode
+                childNode.cost = curNode.cost + 1
+                states[childNode.tokey()] = childNode
+                frontier.append(childk)
+                pass
+            pass
+        
+        pass
+
+    return states
+    pass
+
 def test1(**kwargs):
     with open(FI,"rt") as file:
         content = file.readlines()
@@ -77,8 +119,39 @@ def test1(**kwargs):
     
     
     kwargs.get('debug', {}).update(**locals())
-    pass # solve
+    pass # test1
+
+
+def test2(**kwargs):
+    with open(FI,"rt") as file:
+        content = file.readlines()
+        pass
+
+    # start
+    start = [
+        [int(v.replace('\n', '')) for v in row.split(' ')] 
+        for row in content[0:3]
+    ]
+
+    # goal
+    goal = [
+        [int(v.replace('\n', '')) for v in row.split(' ')] 
+        for row in content[3:6]
+    ]
+
+    states = bfs(start, goal)
+
+    curNode = State(goal)
+    while curNode is not None:
+        curNode.pprint()
+        curNode = states[curNode.tokey()].parent
+        pass
+    
+    
+    kwargs.get('debug', {}).update(**locals())
+    pass # test2
 
 if __name__ == "__main__":
-    test1(debug = globals())
+    # test1(debug = globals())
+    test2(debug = globals())
     pass
