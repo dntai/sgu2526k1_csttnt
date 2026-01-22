@@ -10,16 +10,14 @@ class State:
         self.cost = cost
         pass
 
-    @staticmethod
-    def tokey(key):
+    def convert_key(key):
         return tuple([tuple([v for v in row]) for row in key])
         pass
 
     def tokey(self):
-        return State.tokey(self.key)
+        return State.convert_key(self.key)
         pass
 
-    @staticmethod
     def find0(key):
         for i in range(3):
             for j in range(3):
@@ -27,11 +25,24 @@ class State:
                     return (i,j)
         return (-1,-1)
         pass
+
+    def expand(self):
+        d, c = self.pos0
+        for i in range(len(actions)):
+            dn, cn = d + actions[i][0], c + actions[i][1]
+            if dn>=0 and dn<=2 and cn>=0 and cn<=2:
+                staten = [[v for v in row] for row in self.key]
+                staten[d][c], staten[dn][cn] = staten[dn][cn], staten[d][c]
+
+                yield staten
+                pass
+            pass
+        pass
     
     
     pass
 
-def solve(**kwargs):
+def test1(**kwargs):
     with open(FI,"rt") as file:
         content = file.readlines()
         pass
@@ -49,10 +60,11 @@ def solve(**kwargs):
     ]
 
     print(State(start).tokey())
+    print(State(start).__dict__)
     
     kwargs.get('debug', {}).update(**locals())
     pass # solve
 
 if __name__ == "__main__":
-    solve(debug = globals())
+    test1(debug = globals())
     pass
