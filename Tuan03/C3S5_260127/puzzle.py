@@ -2,6 +2,35 @@
 
 FI = "puzzle.inp"
 
+def bfs(startk, goalk):
+    frontier = []
+    states = dict({})
+
+    sNode = State(startk, parent = None, cost = 0)
+    
+    frontier.append(startk)
+    states[sNode.tokey()] = sNode
+
+    while len(frontier)>0:
+        curk = frontier[0]
+        frontier.pop(0)
+        if State.compareKey(curk, goalk):
+            break
+        curNode = states[State(curk).tokey()]
+        for childk in curNode.expand():
+            if states.get(State.convertKey(childk)) is None:
+                childNode = State(childk)
+                childNode.parent = curNode
+                childNode.cost = curNode.cost + 1
+                states[childNode.tokey()] = childNode
+                frontier.append(childk)
+                pass
+            pass
+        pass
+
+    return states
+    pass
+
 class State:
     actions = [(-1,0),(1,0),(0,-1),(0,1)]
     
@@ -18,6 +47,14 @@ class State:
                 if key[i][j] == 0:
                     return i, j
         return -1, -1
+        pass
+
+    def compareKey(k1, k2):
+        for i in range(3):
+            for j in range(3):
+                if k1[i][j] != k2[i][j]:
+                    return False
+        return True
         pass
 
     def convertKey(key):
@@ -74,6 +111,10 @@ def test1(fpath = FI, **kwargs):
 
     goalNode = State(goal)
     goalNode.pprint('Goal')
+
+
+    states = bfs(start, goal)
+    
     kwargs.get('debug',{}).update(locals())
     pass
 
