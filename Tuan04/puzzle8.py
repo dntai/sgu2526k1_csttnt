@@ -58,7 +58,7 @@ class State:
             for j in range(3):
                 if key[i][j] != 0:
                     dt, ct = info[key[i][j]]
-                    cnt = cnt + abs(dt - i) + abs(ct - j) - 1 
+                    cnt = cnt + abs(dt - i) + abs(ct - j)
         return cnt
         pass
 
@@ -310,7 +310,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--action', type=str, default="help", help='test1, test2')
+    parser.add_argument('--action', type=str, default="help", help='test1, test2, test3')
     parser.add_argument('--heuristic', type=str, default="h1", help='h1, h2')
     args, _ = parser.parse_known_args()
     params  = vars(args)
